@@ -13,24 +13,24 @@
             justify-content: center;
             height: 100vh;
             margin: 0;
+            background-color: #f0f0f0; /* Light background for better contrast */
         }
         .container {
-            width: 400px;
+            width: 90%; /* Use a percentage for responsive width */
+            max-width: 400px; /* Max width for larger screens */
             padding: 20px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             border-radius: 10px;
+            background-color: white; /* White background for container */
         }
-        input {
+        input, select {
             width: 100%;
             padding: 10px;
             margin: 10px 0;
             font-size: 16px;
-        }
-        select {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            font-size: 16px;
+            border: 1px solid #ccc; /* Border for better visibility */
+            border-radius: 5px; /* Rounded corners */
+            box-sizing: border-box; /* Include padding in width calculation */
         }
         button {
             width: 100%;
@@ -41,6 +41,7 @@
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            transition: background-color 0.3s; /* Smooth transition on hover */
         }
         button:hover {
             background-color: #45a049;
