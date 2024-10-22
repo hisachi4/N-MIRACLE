@@ -26,6 +26,12 @@
             margin: 10px 0;
             font-size: 16px;
         }
+        select {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 16px;
+        }
         button {
             width: 100%;
             padding: 10px;
@@ -44,14 +50,42 @@
             padding: 10px;
             border: 1px solid #ddd;
             border-radius: 5px;
-            min-height: 50px;
+            background-color: #f9f9f9;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+        .output strong {
+            color: #333;
+            font-weight: bold;
+        }
+        .output em {
+            color: #666;
+        }
+        .output pre {
+            background-color: #eee;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-family: monospace;
         }
     </style>
+    <!-- MathJax -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    </script>
 </head>
 <body>
     <div class="container">
-        <h2>Enter Data to Solve</h2>
-        <input type="text" id="userInput" placeholder="Enter your problem here">
+        <h2>Enter Expression to Solve</h2>
+        <input type="text" id="userInput" placeholder="Enter mathematical expression (e.g., x^2)">
+        
+        <!-- Dropdown to select differentiation or integration -->
+        <select id="operation">
+            <option value="differentiate">Differentiate</option>
+            <option value="integrate">Integrate</option>
+        </select>
+        
         <button id="solveButton">Solve</button>
         <div class="output" id="resultOutput"></div>
     </div>
@@ -59,16 +93,20 @@
     <script>
         document.getElementById('solveButton').addEventListener('click', function() {
             const userInput = document.getElementById('userInput').value;
+            const operation = document.getElementById('operation').value;
+            
             fetch('/solve', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
                 },
-                body: `inputData=${encodeURIComponent(userInput)}`
+                body: `inputData=${encodeURIComponent(userInput)}&operation=${encodeURIComponent(operation)}`
             })
             .then(response => response.json())
             .then(data => {
-                document.getElementById('resultOutput').textContent = `Result: ${data.result}`;
+                document.getElementById('resultOutput').innerHTML = data.result;
+                // Trigger MathJax to re-render the output
+                MathJax.typesetPromise();
             })
             .catch(error => {
                 document.getElementById('resultOutput').textContent = 'Error processing your request.';
