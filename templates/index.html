@@ -3,57 +3,96 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interactive Solver</title>
+    <title>Calculus Solver</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap" rel="stylesheet"> <!-- Poppins Font -->
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background-color: #e9ecef; /* Soft light grey background */
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             height: 100vh;
             margin: 0;
-            background-color: #f0f0f0; /* Light background for better contrast */
+            padding: 20px; /* Padding for responsiveness */
         }
         .container {
-            width: 90%; /* Use a percentage for responsive width */
-            max-width: 400px; /* Max width for larger screens */
-            padding: 20px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            border-radius: 10px;
-            background-color: white; /* White background for container */
-        }
-        input, select {
             width: 100%;
-            padding: 10px;
+            max-width: 400px; /* Max width for larger screens */
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            border-radius: 15px;
+            background-color: white; /* White background for container */
+            text-align: center; /* Center text */
+            box-sizing: border-box; /* Include padding in width calculation */
+        }
+        h2 {
+            font-family: 'Poppins', sans-serif; /* Attractive font for the title */
+            color: #007bff; /* Bright blue color */
+            margin-bottom: 20px;
+            font-size: 28px; /* Larger font size for title */
+            font-weight: 500; /* Medium weight */
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+        }
+        input {
+            width: 100%;
+            padding: 12px;
             margin: 10px 0;
             font-size: 16px;
-            border: 1px solid #ccc; /* Border for better visibility */
+            border: 2px solid #007bff; /* Blue border for inputs */
             border-radius: 5px; /* Rounded corners */
             box-sizing: border-box; /* Include padding in width calculation */
+            transition: border-color 0.3s; /* Smooth transition for border */
+        }
+        input:focus {
+            border-color: #0056b3; /* Darker blue on focus */
+            outline: none; /* Remove outline */
+        }
+        select {
+            width: 100%; /* Full width */
+            padding: 12px;
+            margin: 10px 0;
+            font-size: 16px;
+            border: 2px solid #007bff; /* Blue border for select */
+            border-radius: 5px; /* Rounded corners */
+            background-color: white; /* White background */
+            appearance: none; /* Remove default arrow */
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10"><polygon points="0,0 10,0 5,5"/></svg>'); /* Custom arrow */
+            background-repeat: no-repeat;
+            background-position: right 10px center; /* Position of arrow */
+            background-size: 12px; /* Size of arrow */
+            transition: border-color 0.3s; /* Smooth transition for border */
+        }
+        select:focus {
+            border-color: #0056b3; /* Darker blue on focus */
+            outline: none; /* Remove outline */
         }
         button {
             width: 100%;
-            padding: 10px;
+            padding: 12px;
             font-size: 16px;
-            background-color: #4CAF50;
+            background-color: #007bff; /* Blue background */
             color: white;
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            transition: background-color 0.3s; /* Smooth transition on hover */
+            transition: background-color 0.3s, transform 0.2s; /* Smooth transitions */
         }
         button:hover {
-            background-color: #45a049;
+            background-color: #0056b3; /* Darker blue on hover */
+            transform: translateY(-2px); /* Lift effect on hover */
         }
         .output {
             margin-top: 20px;
-            padding: 10px;
+            padding: 15px;
             border: 1px solid #ddd;
             border-radius: 5px;
-            background-color: #f9f9f9;
+            background-color: #f8f9fa; /* Light background for output */
             font-size: 16px;
             line-height: 1.5;
+            text-align: left; /* Left-align text for output */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Light shadow */
         }
         .output strong {
             color: #333;
@@ -63,11 +102,12 @@
             color: #666;
         }
         .output pre {
-            background-color: #eee;
+            background-color: #f1f1f1; /* Light grey for preformatted text */
             padding: 10px;
             border-radius: 5px;
             overflow-x: auto;
             font-family: monospace;
+            white-space: pre-wrap; /* Wrap long lines */
         }
     </style>
     <!-- MathJax -->
@@ -78,7 +118,7 @@
 </head>
 <body>
     <div class="container">
-        <h2>Enter Expression to Solve</h2>
+        <h2>Calculus Solver</h2>
         <input type="text" id="userInput" placeholder="Enter mathematical expression (e.g., x^2)">
         
         <!-- Dropdown to select differentiation or integration -->
